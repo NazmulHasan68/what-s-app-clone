@@ -2,7 +2,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 
-export default function HeaderMenu() {
+export default function HeaderMenu({setOpenDrawer}) {
     const [open ,setOpen] = useState(null)
     
     const handleClick = (e) => {
@@ -33,7 +33,7 @@ export default function HeaderMenu() {
             horizontal : 'right'
         }}
       >
-        <MenuItem onClick={handleClose} className='text-sm'>Profile</MenuItem>
+        <MenuItem onClick={()=>{handleClose(); setOpenDrawer(true)}} className='text-sm' >Profile</MenuItem>
         <MenuItem onClick={handleClose} className='text-sm'>My account</MenuItem>
         <MenuItem onClick={handleClose} className='text-sm'>Logout</MenuItem>
       </Menu>

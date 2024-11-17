@@ -2,6 +2,8 @@ import { Dialog, Box, Typography, List, ListItem, styled } from '@mui/material';
 import qr from '../../assets/qr.png';
 import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
+import { useContext } from 'react';
+import { AccountConttext } from '../../context/AccountProvider';
 
 
 const dialogStyle = {
@@ -44,10 +46,13 @@ const StyleList = styled(List)`
 `;
 
 export default function LoginDialog() {
+
+  const {setAccount} = useContext(AccountConttext)
+
   const onLoginSuccess = (response) => {
     // Decode the JWT credential
     const data = jwt_decode(response.credential);
-    console.log('Decoded User Data:', data);
+    setAccount(data)
   };
 
   const onLoginError = (error) => {
@@ -55,7 +60,7 @@ export default function LoginDialog() {
   };
 
   return (
-    <Dialog open={true} PaperProps={{ sx: dialogStyle }}>
+    <Dialog open={true} PaperProps={{ sx: dialogStyle }} hideBackdrop={true}>
       <Component>
         <Container>
           <Title>To use WhatsApp on your computer</Title>

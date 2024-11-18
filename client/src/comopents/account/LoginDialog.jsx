@@ -4,6 +4,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
 import { useContext } from 'react';
 import { AccountConttext } from '../../context/AccountProvider';
+import { addUser } from '../../service/api';
 
 
 const dialogStyle = {
@@ -49,10 +50,11 @@ export default function LoginDialog() {
 
   const {setAccount} = useContext(AccountConttext)
 
-  const onLoginSuccess = (response) => {
+  const onLoginSuccess = async(response) => {
     // Decode the JWT credential
     const data = jwt_decode(response.credential);
     setAccount(data)
+    await addUser(data)
   };
 
   const onLoginError = (error) => {

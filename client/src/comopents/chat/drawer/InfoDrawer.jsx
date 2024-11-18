@@ -25,9 +25,9 @@ export default function InfoDrawer({open, setopen}) {
         style={{zIndex:1500}}
         PaperProps={{sx:drawstyle}}
     >
-        <div className="flex gap-4 h-36 bg-[#008069] items-end px-4 py-2 text-white">
+        <div className="flex gap-4 h-36 bg-[#008069] items-end px-4 py-2 text-white cursor-pointer hover:font-bold">
             <ArrowBackIcon onClick={()=>setopen(false)}/>
-            <p className="text-lg font-semibold">Profile</p>
+            <p className="text-lg font-semibold  cursor-pointer ">Profile</p>
         </div>
         <div className="flex gap-4 py-10 bg-[#86a8a2] items-center px-4 justify-center">
            <div className="w-36 h-36 rounded-full border-2 overflow-hidden">

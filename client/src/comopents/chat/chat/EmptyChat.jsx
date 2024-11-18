@@ -2,7 +2,7 @@ import empty from '../../../assets/em.png'
 
 export default function EmptyChat() {
   return (
-    <div className='bg-[#f8f9f8] w-full h-screen flex justify-center items-center flex-col'>
+    <div className='bg-[#e1e6e1] w-full h-screen flex justify-center items-center flex-col'>
       <img src={empty} className=' mix-blend-multiply w-96 '/>
       <p className='text-3xl font-normal text-[#415258] mt-5 py-2'>WhatsApp Web <span className=' bg-slate-300 text-sm p-1'>NEW</span></p>
       <p className='text-sm text-gray-500 mt-4'>Now send and receive messages without keeping your phone online.</p>

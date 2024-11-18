@@ -1,3 +1,4 @@
+import Conversations from "./COnversations"
 import Header from "./Header"
 import Search from "./Search"
 
@@ -6,6 +7,7 @@ const Menu = () =>{
         <>
             <Header/>
             <Search/>
+            <Conversations/>
         </>
     )
 }

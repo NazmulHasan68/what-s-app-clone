@@ -56,6 +56,8 @@ export default function Messages({person, conversation}) {
       conversation._id && getMessageDetails()
     },[person._id, conversation._id, newMessageFlg])
 
+    
+
   return (
     <div  style={{ backgroundColor: '#f3f3f3'}} className=' overflow-y-scroll mb-4'>
       <div className='px-4 h-[78vh]'>

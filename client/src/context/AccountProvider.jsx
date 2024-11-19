@@ -1,8 +1,14 @@
-import { createContext, useState } from "react";
+import { createContext, useState , useRef, useEffect} from "react";
+import {io} from 'socket.io-client'
 
 export const AccountConttext = createContext(null)
 
 const AccountProvider = ({children}) =>{
+    const socket = useRef()
+
+    useEffect(()=>{
+        socket.current = io('ws://localhost:9000')
+    },[])
 
     const [account , setAccount] = useState()
     const [person, setPerson] = useState({})
@@ -12,7 +18,8 @@ const AccountProvider = ({children}) =>{
             account,
             setAccount,
             person,
-            setPerson
+            setPerson,
+            socket
         }}>
             {children}
         </AccountConttext.Provider>

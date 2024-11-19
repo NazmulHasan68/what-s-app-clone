@@ -16,6 +16,8 @@ export default function Conversations({text}) {
               user.name.toLowerCase().includes(text.toLowerCase()) 
             );
             setuser(filterData);
+            console.log(users[0].picture);
+            
           } catch (error) {
             console.error("Error fetching users:", error.message);
           }

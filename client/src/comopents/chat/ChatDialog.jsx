@@ -24,11 +24,7 @@ export default function ChatDialog() {
   const {person} = useContext(AccountConttext)
   return (
     <div>
-      <Dialog
-        open={true}
-        hideBackdrop={true}
-        PaperProps={{ sx: dialogStyle }}
-      >
+      <Dialog open={true} hideBackdrop={true} PaperProps={{ sx: dialogStyle }}>
         <Box className="flex min-w-4xl">
             <Box className='basis-2/6'>
                 <Menu/>

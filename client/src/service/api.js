@@ -64,3 +64,13 @@ export const getMessages = async(id)=>{
        console.log(error);
     }
 }
+
+
+export const uploadFile = async(data)=>{
+    try {
+        let res = await axios.post(`${url}/file/upload`, data)
+        return res.data
+    } catch (error) {
+       console.log("uploadfile api",error);
+    }
+}

@@ -9,6 +9,9 @@ import Message from './Message';
 export default function Messages({person, conversation}) {
   const {account} = useContext(AccountConttext)
   const [newMessageFlg, setnewMessageFlg] = useState(false)
+  
+  const [file, setfile] = useState()
+  const {Image, setImage} = useState('')
 
   const [text , setText] = useState('')
   const [messages , setMessages] = useState([])
@@ -17,16 +20,29 @@ export default function Messages({person, conversation}) {
     const sendText =async (e) =>{
       const code = e.keyCode || e.which
       if(code === 13){
-        let message ={
-          senderId:account.sub,
-          receiverId: person.sub,
-          conversationid :conversation._id,
-          type : 'text',
-          text:text
+        let message ={}
+        if(!file){
+         message ={
+            senderId:account.sub,
+            receiverId: person.sub,
+            conversationid :conversation._id,
+            type : 'text',
+            text:text
+          }
+        }else{
+           message ={
+            senderId:account.sub,
+            receiverId: person.sub,
+            conversationid :conversation._id,
+            type : 'text',
+            text: Image
+          }
         }
-        console.log(message);
+
        await newMessage(message)
        setText("");
+       setfile('')
+       setImage('')
        setnewMessageFlg(prev => !prev )
       }
     }
@@ -47,7 +63,7 @@ export default function Messages({person, conversation}) {
           <Message key={index} message={message}/>
         ))}
       </div>
-      <Footer sendText={sendText} setText={setText} text={text}/>
+      <Footer sendText={sendText} setText={setText} text={text} setfile={setfile} file={file} setImage={setImage}/>
     </div>
   );
 }

@@ -51,7 +51,6 @@ export default function LoginDialog() {
   const {setAccount} = useContext(AccountConttext)
 
   const onLoginSuccess = async(response) => {
-
     const data = jwt_decode(response.credential);
     setAccount(data)
     await addUser(data)

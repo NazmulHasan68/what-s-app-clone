@@ -5,6 +5,7 @@ export const newMessageController = async(req, res)=>{
     try {
         const newMessage = new Message(req.body)  
         const message = await newMessage.save()
+        
         const update = await Conversation.findByIdAndUpdate(req.body.conversationid, {message: req.body.text})
         return res.status(200).json('Message has been sent successfully')
         

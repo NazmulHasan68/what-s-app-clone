@@ -3,7 +3,8 @@ import qr from '../../assets/qr.png';
 import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
 import { useContext } from 'react';
-import { AccountConttext } from '../../context/AccountProvider';
+import { AccountContext } from '../../context/AccountProvider';
+
 import { addUser } from '../../service/api';
 
 
@@ -48,7 +49,7 @@ const StyleList = styled(List)`
 
 export default function LoginDialog() {
 
-  const {setAccount} = useContext(AccountConttext)
+  const {setAccount} = useContext(AccountContext)
 
   const onLoginSuccess = async(response) => {
     const data = jwt_decode(response.credential);

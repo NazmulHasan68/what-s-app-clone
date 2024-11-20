@@ -1,71 +1,106 @@
-
 import Footer from './Footer';
-import { useContext, useEffect, useState } from 'react';
-import { AccountConttext } from "../../../context/AccountProvider";
+import { useContext, useEffect, useRef, useState } from 'react';
+import { AccountContext } from "../../../context/AccountProvider";
 import { getMessages, newMessage } from '../../../service/api';
 import Message from './Message';
 
+export default function Messages({ person, conversation }) {
+  const { account, socket } = useContext(AccountContext);
+  const [messages, setMessages] = useState([]);
+  const [incomingmessage, setincomingmessage] = useState(null);
+  const [text, setText] = useState('');
+  const [file, setFile] = useState(null);
+  const [Image, setImage] = useState('');
+  const scrollRef = useRef();
 
-export default function Messages({person, conversation}) {
-  const {account} = useContext(AccountConttext)
-  const [newMessageFlg, setnewMessageFlg] = useState(false)
-  
-  const [file, setfile] = useState()
-  const {Image, setImage} = useState('')
-
-  const [text , setText] = useState('')
-  const [messages , setMessages] = useState([])
- 
-  
-    const sendText =async (e) =>{
-      const code = e.keyCode || e.which
-      if(code === 13){
-        let message ={}
-        if(!file){
-         message ={
-            senderId:account.sub,
-            receiverId: person.sub,
-            conversationid :conversation._id,
-            type : 'text',
-            text:text
-          }
-        }else{
-           message ={
-            senderId:account.sub,
-            receiverId: person.sub,
-            conversationid :conversation._id,
-            type : 'text',
-            text: Image
-          }
-        }
-
-       await newMessage(message)
-       setText("");
-       setfile('')
-       setImage('')
-       setnewMessageFlg(prev => !prev )
-      }
+  // Listen for incoming messages
+  useEffect(() => {
+    const currentSocket = socket.current;
+    if (currentSocket) {
+      currentSocket.on('getMessage', (data) => {
+        setincomingmessage({
+          ...data,
+          createdAt: new Date().toISOString(), 
+        });
+      });
+      
     }
+    return () => currentSocket?.off('getMessage'); // Clean up listener
+  }, [socket]);
 
-    useEffect(()=>{
-      const getMessageDetails = async()=>{
-       let data =  await getMessages(conversation._id)
-       setMessages(data)
-       
-      }
-      conversation._id && getMessageDetails()
-    },[person._id, conversation._id, newMessageFlg])
 
-    
+  
+   
+  
+
+  // Append incoming message if it belongs to the conversation
+  useEffect(() => {
+    if (
+      incomingmessage &&
+      conversation?.members?.includes(incomingmessage.senderId)
+    ) {
+      setMessages((prev) => [...prev, incomingmessage]);
+    }
+  }, [incomingmessage, conversation]);
+
+  // Fetch messages when conversation changes
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const data = await getMessages(conversation._id);
+      setMessages(data);
+    };
+    if (conversation._id) fetchMessages();
+  }, [conversation._id]);
+
+  // Scroll to the bottom of the container when messages update
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  // Send a message
+  const sendText = async (e) => {
+    const code = e.keyCode || e.which;
+    if (code === 13) {
+      if (!text && !Image) return;
+
+      const message = {
+        senderId: account.sub,
+        receiverId: person.sub,
+        conversationid: conversation._id,
+        type: file ? 'media' : 'text',
+        text: file ? Image : text,
+      };
+
+      socket.current.emit('sendMessage', message); // Emit to socket
+      await newMessage(message); // Save to database
+
+      setText('');
+      setFile('');
+      setImage('');
+      setMessages((prev) => [...prev, message]); // Update messages locally
+    }
+  };
 
   return (
-    <div  style={{ backgroundColor: '#f3f3f3'}} className=' overflow-y-scroll mb-4'>
-      <div className='px-4 h-[78vh]'>
-        {messages && messages.map((message, index)=>(
-          <Message key={index} message={message}/>
-        ))}
+    <div style={{ backgroundColor: '#f3f3f3' }} className="mb-4">
+      <div className="px-4 h-[500px] overflow-y-auto" ref={scrollRef}>
+        {messages &&
+          messages.map((message, index) => (
+            <div key={index}>
+              <Message message={message} />
+            </div>
+          ))}
       </div>
-      <Footer sendText={sendText} setText={setText} text={text} setfile={setfile} file={file} setImage={setImage}/>
+      <Footer
+        sendText={sendText}
+        setText={setText}
+        text={text}
+        setFile={setFile}
+        file={file}
+        setImage={setImage}
+      />
     </div>
   );
 }

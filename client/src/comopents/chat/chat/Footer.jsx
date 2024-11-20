@@ -31,8 +31,8 @@ export default function Footer({sendText,text, setText, file, setfile, setImage}
   },[file])
 
   return (
-    <div className="h-[22vh] shadow-md">
-      <div className=' w-full bg-slate-200 py-2 flex gap-2 px-4 items-center'>
+    <div className="h-22vh shadow-md">
+      <div className=' w-full bg-slate-300 py-2 flex gap-2 px-4 items-center'>
         <SentimentSatisfiedAltIcon className='cursor-pointer' style={{ fontSize: '25px',  }}/>
         <label htmlFor='fileInput'>
           <input type='file' className=' hidden' id='fileInput' onChange={(e)=>onFileChange(e)}/>

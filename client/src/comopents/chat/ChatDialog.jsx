@@ -3,7 +3,7 @@ import Menu from "./menu/Menu";
 import ChatBox from "./chat/ChatBox";
 
 import { useContext } from "react";
-import { AccountConttext } from "../../context/AccountProvider";
+import { AccountContext } from "../../context/AccountProvider";
 import EmptyChat from "./chat/EmptyChat";
 
 //components menu
@@ -21,15 +21,15 @@ const dialogStyle = {
   };
 
 export default function ChatDialog() {
-  const {person} = useContext(AccountConttext)
+  const {person} = useContext(AccountContext)
   return (
-    <div>
+    <div className="">
       <Dialog open={true} hideBackdrop={true} PaperProps={{ sx: dialogStyle }}>
-        <Box className="flex min-w-4xl">
-            <Box className='basis-2/6'>
+        <Box className="flex min-w-4x ">
+            <Box className='basis-2/6 h-full'>
                 <Menu/>
             </Box>
-            <Box className="basis-4/6">
+            <Box className="basis-4/6 h-full">
             {
               Object.keys(person).length ? <ChatBox/>:<EmptyChat/>
             }      

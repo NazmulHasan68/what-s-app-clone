@@ -2,11 +2,11 @@ import { Drawer } from "@mui/material"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import { useContext } from "react";
-import { AccountConttext } from "../../../context/AccountProvider";
+import { AccountContext } from "../../../context/AccountProvider";
 
 
 export default function InfoDrawer({open, setopen}) {
-    const {account} = useContext(AccountConttext)
+    const {account} = useContext(AccountContext)
     const handleclose = () =>{
         setopen(false)
     }

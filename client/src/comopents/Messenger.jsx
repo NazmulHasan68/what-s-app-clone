@@ -5,7 +5,7 @@ import {Box,Toolbar, AppBar } from '@mui/material';
 
 import ChatDialog from "./chat/ChatDialog";
 import { useContext } from "react";
-import { AccountConttext } from "../context/AccountProvider";
+import { AccountContext } from "../context/AccountProvider";
 
 
 const LoginHeader = styled(AppBar)`
@@ -26,11 +26,11 @@ const Comopent = styled(Box)`
 `
 
 export default function Messenger() {
-    const {account} = useContext(AccountConttext)
+    const {account} = useContext(AccountContext)
 
   return (
     <div>
-        <Comopent>
+        <Comopent className="h-100vh">
             {
                 account ?
                 <>

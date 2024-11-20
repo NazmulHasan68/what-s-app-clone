@@ -1,11 +1,11 @@
 import ChatHeader from "./ChatHeader";
 import Messages from "./Messages";
 import { useContext, useEffect, useState } from "react";
-import { AccountConttext } from "../../../context/AccountProvider";
+import { AccountContext } from "../../../context/AccountProvider";
 import { getConversation } from "../../../service/api";
 
 export default function ChatBox() {
-    const {account, person} = useContext(AccountConttext)
+    const {account, person} = useContext(AccountContext)
     const [conversation, setconversation] = useState({})
 
     useEffect(()=>{
@@ -17,9 +17,9 @@ export default function ChatBox() {
     },[person.sub])
 
   return (
-    <div>
+    <div className="max-h-screen">
       <ChatHeader person={person}/>
-      <Messages person={person} conversation={conversation}/>
+      <Messages person={person} conversation={conversation} />
     </div>
   )
 }

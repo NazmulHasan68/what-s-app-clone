@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { AccountConttext } from "../../../context/AccountProvider"
+import { AccountContext } from "../../../context/AccountProvider"
 
 import WebStoriesIcon from '@mui/icons-material/WebStories';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -7,7 +7,7 @@ import HeaderMenu from "./HeaderMenu";
 import InfoDrawer from "../drawer/InfoDrawer";
 
 export default function Header() {
-    const {account} = useContext(AccountConttext)
+    const {account} = useContext(AccountContext)
     const [openDrawer , setOpenDrawer] = useState(false)
 
     const toggleDrawer = () =>{

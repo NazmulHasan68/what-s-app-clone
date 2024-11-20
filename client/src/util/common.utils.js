@@ -1,6 +1,6 @@
-
-export const formDate = (data)=>{
-    const houres = new Date(data).getHours()
+export const formDate = (data) => {
+    const hours = new Date(data).getHours();
     const minutes = new Date(data).getMinutes();
-    return `${houres<10 ? '0' + houres : houres} : ${minutes <10 ? '0':minutes}`
-}
+    return `${hours < 10 ? '0' + hours : hours} : ${minutes < 10 ? '0' + minutes : minutes}`;
+  };
+  
